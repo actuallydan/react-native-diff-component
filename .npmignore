@@ -1,0 +1,8 @@
+**/.*
+example
+script
+specs
+bower.json
+karma.conf.js
+webpack.config.js
+.DS_Store
