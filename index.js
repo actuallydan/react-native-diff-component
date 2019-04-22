@@ -21,7 +21,6 @@ export default function Diff({
 }) {
   let val = 1;
   var diff = fnMap[type](inputA, inputB);
-  console.log(diff);
   var result = diff.map(function(part, index) {
     var spanStyle = part.added
       ? { ...styles.addedText, ...addedText }
@@ -35,7 +34,6 @@ export default function Diff({
       </Text>
     );
   });
-  // console.log(result);
   return (
     <View style={[styles.defaultContainerStyle, containerStyle]}>{result}</View>
   );
