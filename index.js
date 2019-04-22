@@ -1,35 +1,72 @@
 import PropTypes from "prop-types";
 import React from "react";
-import jsdiff from "diff";
+import { View, StyleSheet, Text } from "react-native";
+import { diffChars, diffWords, diffSentences } from "diff";
 
 const fnMap = {
-  chars: jsdiff.diffChars,
-  words: jsdiff.diffWords,
-  sentences: jsdiff.diffSentences,
-  json: jsdiff.diffJson
+  chars: diffChars,
+  words: diffWords,
+  sentences: diffSentences
 };
 
-export default function Diff({ inputA = "", inputB = "", type = "chars" }) {
+export default function Diff({
+  inputA = "",
+  inputB = "",
+  type = "chars",
+  textStyle = {},
+  addedText = {},
+  removedText = {},
+  unchangedText = {},
+  containerStyle = {}
+}) {
+  let val = 1;
   var diff = fnMap[type](inputA, inputB);
+  console.log(diff);
   var result = diff.map(function(part, index) {
-    var spanStyle = {
-      backgroundColor: part.added
-        ? "lightgreen"
-        : part.removed
-        ? "salmon"
-        : "lightgrey"
-    };
+    var spanStyle = part.added
+      ? { ...styles.addedText, ...addedText }
+      : part.removed
+      ? { ...styles.removedText, ...removedText }
+      : { ...styles.defaultText, ...unchangedText };
+
     return (
-      <span key={index} style={spanStyle}>
+      <Text key={index} style={[styles.defaultText, spanStyle, textStyle]}>
         {part.value}
-      </span>
+      </Text>
     );
   });
-  return <pre className="diff-result">{result}</pre>;
+  // console.log(result);
+  return (
+    <View style={[styles.defaultContainerStyle, containerStyle]}>{result}</View>
+  );
 }
 
 Diff.propTypes = {
-  inputA: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  inputB: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  type: PropTypes.oneOf(["chars", "words", "sentences", "json"])
+  inputA: PropTypes.oneOfType([PropTypes.string]),
+  inputB: PropTypes.oneOfType([PropTypes.string]),
+  type: PropTypes.oneOf(["chars", "words", "sentences"]),
+  textStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
+  addedText: PropTypes.object,
+  removedText: PropTypes.object,
+  unchangedText: PropTypes.object
 };
+
+var styles = StyleSheet.create({
+  defaultText: {},
+  addedText: {
+    backgroundColor: "lightgreen",
+    color: "#000000"
+  },
+  removedText: {
+    backgroundColor: "salmon",
+    textDecorationLine: "line-through",
+    textDecorationStyle: "solid",
+    color: "#000000"
+  },
+  defaultContainerStyle: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-end"
+  }
+});

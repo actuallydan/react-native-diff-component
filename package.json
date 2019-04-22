@@ -1,6 +1,6 @@
 {
   "name": "react-native-diff-component",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Highlight differences between inputs",
   "main": "index.js",
   "scripts": {
@@ -22,10 +22,11 @@
   },
   "homepage": "https://github.com/actuallydan/react-native-diff-component",
   "peerDependencies": {
-    "react": ">=0.12.0"
+    "react": ">=0.12.0",
+    "react-native": "*"
   },
   "dependencies": {
-    "diff": "^1.2.0",
+    "diff": "^4.0.1",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
