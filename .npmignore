@@ -6,3 +6,5 @@ bower.json
 karma.conf.js
 webpack.config.js
 .DS_Store
+.lock
+package-lock.json
