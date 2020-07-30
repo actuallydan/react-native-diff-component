@@ -14,10 +14,14 @@ export default function Diff({
   inputB = "",
   type = "chars",
   textStyle = {},
+  viewStyle = {},
   addedText = {},
   removedText = {},
   unchangedText = {},
   containerStyle = {},
+  addedColor = "lightgreen",
+  removedColor = "salmon",
+  unchangedColor = "transparent",
 }) {
   var diff = fnMap[type](inputA, inputB);
   var result = diff.map(function (part, index) {
@@ -27,10 +31,21 @@ export default function Diff({
       ? { ...styles.removedText, ...removedText }
       : { ...styles.defaultText, ...unchangedText };
 
+    var computedViewStyle = {
+      ...viewStyle,
+      backgroundColor: part.added
+        ? addedColor
+        : part.removed
+        ? removedColor
+        : unchangedColor,
+    };
+
     return (
-      <Text key={index} style={[styles.defaultText, spanStyle, textStyle]}>
-        {part.value}
-      </Text>
+      <View key={index} style={computedViewStyle}>
+        <Text style={[styles.defaultText, spanStyle, textStyle]}>
+          {part.value}
+        </Text>
+      </View>
     );
   });
   return (
@@ -47,16 +62,17 @@ Diff.propTypes = {
   addedText: PropTypes.object,
   removedText: PropTypes.object,
   unchangedText: PropTypes.object,
+  addedColor: PropTypes.string,
+  removedColor: PropTypes.string,
+  unchangedColor: PropTypes.string,
 };
 
 var styles = StyleSheet.create({
   defaultText: {},
   addedText: {
-    backgroundColor: "lightgreen",
     color: "#000000",
   },
   removedText: {
-    backgroundColor: "salmon",
     textDecorationLine: "line-through",
     textDecorationStyle: "solid",
     color: "#000000",
