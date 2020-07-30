@@ -2,6 +2,6 @@
 *.iml
 node_modules/
 .DS_Store
-.lock
+yarn.lock
 package-lock.json
 **/.*

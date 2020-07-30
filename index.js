@@ -6,7 +6,7 @@ import { diffChars, diffWords, diffSentences } from "diff";
 const fnMap = {
   chars: diffChars,
   words: diffWords,
-  sentences: diffSentences
+  sentences: diffSentences,
 };
 
 export default function Diff({
@@ -17,11 +17,10 @@ export default function Diff({
   addedText = {},
   removedText = {},
   unchangedText = {},
-  containerStyle = {}
+  containerStyle = {},
 }) {
-  let val = 1;
   var diff = fnMap[type](inputA, inputB);
-  var result = diff.map(function(part, index) {
+  var result = diff.map(function (part, index) {
     var spanStyle = part.added
       ? { ...styles.addedText, ...addedText }
       : part.removed
@@ -47,24 +46,24 @@ Diff.propTypes = {
   containerStyle: PropTypes.object,
   addedText: PropTypes.object,
   removedText: PropTypes.object,
-  unchangedText: PropTypes.object
+  unchangedText: PropTypes.object,
 };
 
 var styles = StyleSheet.create({
   defaultText: {},
   addedText: {
     backgroundColor: "lightgreen",
-    color: "#000000"
+    color: "#000000",
   },
   removedText: {
     backgroundColor: "salmon",
     textDecorationLine: "line-through",
     textDecorationStyle: "solid",
-    color: "#000000"
+    color: "#000000",
   },
   defaultContainerStyle: {
     flexDirection: "row",
     flexWrap: "wrap",
-    alignItems: "flex-end"
-  }
+    alignItems: "flex-end",
+  },
 });
